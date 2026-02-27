@@ -38,7 +38,7 @@ namespace MedicamentBO
 
         public override string ToString()
         {
-            return $"Ordonnance: {Designation}, Posologie: {Posologie}, Code Médicament: {CodeMedicament}, Date: {Date.ToShortDateString()}, Numéro Patient: {NumeroPatient}";
+            return $"Ordonnance: {Designation}, Posologie: {Posologie}, Médicament {Medicaments}, Date: {Date.ToShortDateString()}, Numéro Patient: {NumeroPatient}";
         }
 
 
