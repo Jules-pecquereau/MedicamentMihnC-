@@ -21,7 +21,7 @@ namespace MedicamentConsole
             Console.WriteLine("\nRecherche de médicaments contenant 'Paracétamol':");
             try
             {
-                var medicamentsTrouves = biblioteque.RechercherMedicament("Paracétamol");
+                var medicamentsTrouves = biblioteque.RechercherMedicament("doliprane");
                 foreach (var medicament in medicamentsTrouves)
                 {
                     Console.WriteLine(medicament);
@@ -32,19 +32,19 @@ namespace MedicamentConsole
                 Console.WriteLine($"erreur: {ex.Message}");
             }
 
-            Console.WriteLine("\nRecherche de médicaments du laboratoire 'Sanofi':");
-            try
-            {
-                var medicamentsSanofi = biblioteque.RechercherParLaboratoire("Sanofi");
-                foreach (var medicament in medicamentsSanofi)
-                {
-                    Console.WriteLine(medicament);
-                }
-            }
-            catch (ExeptionRechercheMedicament ex)
-            {
-                Console.WriteLine($"erreur: {ex.Message}");
-            }
+            //Console.WriteLine("\nRecherche de médicaments du laboratoire 'Sanofi':");
+            //try
+            //{
+            //    var medicamentsSanofi = biblioteque.RechercherParLaboratoire("Sanofi");
+            //    foreach (var medicament in medicamentsSanofi)
+            //    {
+            //        Console.WriteLine(medicament);
+            //    }
+            //}
+            //catch (ExeptionRechercheMedicament ex)
+            //{
+            //    Console.WriteLine($"erreur: {ex.Message}");
+            //}
             
 
 
