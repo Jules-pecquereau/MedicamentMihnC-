@@ -32,22 +32,7 @@ namespace MedicamentConsole
                 Console.WriteLine($"erreur: {ex.Message}");
             }
 
-<<<<<<< Updated upstream
-            //Console.WriteLine("\nRecherche de médicaments du laboratoire 'Sanofi':");
-            //try
-            //{
-            //    var medicamentsSanofi = biblioteque.RechercherParLaboratoire("Sanofi");
-            //    foreach (var medicament in medicamentsSanofi)
-            //    {
-            //        Console.WriteLine(medicament);
-            //    }
-            //}
-            //catch (ExeptionRechercheMedicament ex)
-            //{
-            //    Console.WriteLine($"erreur: {ex.Message}");
-            //}
-            
-=======
+
             Console.WriteLine("\nRecherche de médicaments du laboratoire 'Sanofi':");
             try
             {
@@ -61,9 +46,6 @@ namespace MedicamentConsole
             {
                 Console.WriteLine($"erreur: {ex.Message}");
             }
-
->>>>>>> Stashed changes
-
 
 
             Console.WriteLine("Tous les Patients:");
