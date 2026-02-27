@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace MedicamentBO
 {
-    internal class Patient : User
+    public class Patient : User
     {
+
+        public int Id { get; }
         public string Adresse { get; }
         public string CodePostal { get; }
         public string Ville { get; }
@@ -16,8 +18,9 @@ namespace MedicamentBO
         public int NumeroSecu { get; }
         public int Telehone { get; }
 
-        public Patient(string nom, string prenom, string email, string adresse, string codePostal, string ville, string pays, int numeroSecu, int telehone) : base(nom, prenom, email)
+        public Patient(int id, string nom, string prenom, string email, string adresse, string codePostal, string ville, string pays, int numeroSecu, int telehone) : base(nom, prenom, email)
         {
+            Id = id;
             Adresse = adresse;
             CodePostal = codePostal;
             Ville = ville;
