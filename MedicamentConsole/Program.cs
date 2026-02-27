@@ -14,14 +14,14 @@ namespace MedicamentConsole
             var bibliothequePatients = BddRepository.BuildBibliothequePatients();
             Console.WriteLine("Tous les médicaments:");
             foreach (var medicament in biblioteque.AfficherAllMedicament())
-            {                
+            {
                 Console.WriteLine(medicament);
             }
 
             Console.WriteLine("\nRecherche de médicaments contenant 'Paracétamol':");
             try
             {
-                var medicamentsTrouves = biblioteque.RechercherMedicament("Paracétamol");
+                var medicamentsTrouves = biblioteque.RechercherMedicament("doliprane");
                 foreach (var medicament in medicamentsTrouves)
                 {
                     Console.WriteLine(medicament);
@@ -31,6 +31,7 @@ namespace MedicamentConsole
             {
                 Console.WriteLine($"erreur: {ex.Message}");
             }
+
 
             Console.WriteLine("\nRecherche de médicaments du laboratoire 'Sanofi':");
             try
@@ -45,16 +46,42 @@ namespace MedicamentConsole
             {
                 Console.WriteLine($"erreur: {ex.Message}");
             }
-            
-
 
 
             Console.WriteLine("Tous les Patients:");
             foreach (var patient in bibliothequePatients.AfficherAllPatients())
-            {                
+            {
                 Console.WriteLine(patient);
             }
 
+            Console.WriteLine("\nRecherche de patients contenant 'Dupont':");
+            try
+            {
+                var patientsTrouves = bibliothequePatients.RechercherPatient("Dupont");
+                foreach (var patient in patientsTrouves)
+                {
+                    Console.WriteLine(patient);
+                }
+            }
+            catch (ExeptionRecherchePatient ex)
+            {
+                Console.WriteLine($"erreur: {ex.Message}");
+
+            }
+
+            Console.WriteLine("\nRecherche de patients dans la ville 'Paris':");
+            try
+            {
+                var patientsParis = bibliothequePatients.RechercherParVille("Paris");
+                foreach (var patient in patientsParis)
+                {
+                    Console.WriteLine(patient);
+                }
+            }
+            catch (ExeptionRecherchePatient ex)
+            {
+                Console.WriteLine($"erreur: {ex.Message}");
+            }
         }
     }
 }

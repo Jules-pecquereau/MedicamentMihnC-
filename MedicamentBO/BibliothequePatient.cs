@@ -31,11 +31,21 @@ namespace MedicamentBO
 
         public IEnumerable<Patient> RechercherPatient(string nom)
         {
+            if (!lePatients.Any(p => p.Nom.Contains(nom, StringComparison.OrdinalIgnoreCase)))
+            {
+                throw new ExeptionRecherchePatient($"Aucun patient trouvé avec le nom '{nom}'.");
+            }
+
             return lePatients.Where(p => p.Nom.Contains(nom, StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<Patient> RechercherParVille(string ville)
         {
+            if (!lePatients.Any(p => p.Ville.Contains(ville, StringComparison.OrdinalIgnoreCase)))
+            {
+                throw new ExeptionRecherchePatient($"Aucun patient trouvé dans la ville '{ville}'.");
+            }
+
             return lePatients.Where(p => p.Ville.Contains(ville, StringComparison.OrdinalIgnoreCase));
         }
 
