@@ -2,11 +2,11 @@
 
 public class Medicament
 {
-    public int Code_Medicament { get; set; }
+    public long Code_Medicament { get; set; }
     public string Name { get; set; }
     public string Laboratory { get; set; }
 
-    public Medicament(int code_Medicament, string name, string laboratory)
+    public Medicament(long code_Medicament, string name, string laboratory)
     {
         Code_Medicament = code_Medicament;
         Name = name;
