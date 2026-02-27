@@ -10,9 +10,9 @@ namespace Tests
         }
 
         [Test]
-        public void Test1()
+        public void MedicamentConstruc()
         {
-            Assert.Pass();
+            
         }
     }
 }
