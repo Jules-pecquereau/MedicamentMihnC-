@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MedicamentGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Gestion Médicaments et Patients" Height="600" Width="1000">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Barre de navigation -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="BtnMedicaments" Content="Médicaments" 
+                        Width="150" Height="40" Margin="10,0" 
+                        Background="#3498DB" Foreground="White" 
+                        FontSize="16" FontWeight="Bold"
+                        BorderThickness="0" Cursor="Hand"
+                        Click="BtnMedicaments_Click"/>
+                <Button x:Name="BtnPatients" Content="Patients" 
+                        Width="150" Height="40" Margin="10,0" 
+                        Background="#3498DB" Foreground="White" 
+                        FontSize="16" FontWeight="Bold"
+                        BorderThickness="0" Cursor="Hand"
+                        Click="BtnPatients_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Conteneur pour les pages -->
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

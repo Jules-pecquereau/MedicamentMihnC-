@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using System.Configuration; 
+using System.Configuration;
+using MedicamentBO;
 
 
 
@@ -20,19 +21,27 @@ namespace MedecineApp
             _connectionString = ConfigurationManager.ConnectionStrings["BDDConnection"].ConnectionString;
         }
 
-        public void Open()
+        public IEnumerable<Medicament> BuildBibliothequeMedicaments()
         {
-            var connection = new MySqlConnection(_connectionString);
-            try
+            var medicaments = new List<Medicament>();
+            using (var connection = new MySqlConnection(_connectionString))
             {
                 connection.Open();
-                
-                Console.WriteLine("Connection opened successfully.");
+                var command = new MySqlCommand("SELECT * FROM Medicaments", connection);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var medicament = new Medicament(
+                            reader.GetInt64("Code_medicament"),
+                            reader.GetString("Designation"),
+                            reader.GetString("Laboratoire")
+                        );
+                        medicaments.Add(medicament);
+                    }
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error opening connection: {ex.Message}");
-            }
+            return medicaments;
         }
     }
 }
