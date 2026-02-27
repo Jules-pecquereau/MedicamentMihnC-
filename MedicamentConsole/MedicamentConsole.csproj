@@ -6,9 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <ProjectReference Include="..\MedicamentBO\MedicamentBO.csproj" />
+    <ProjectReference Include="..\MedecineApp\MedecineApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

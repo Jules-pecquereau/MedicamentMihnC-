@@ -15,7 +15,7 @@ namespace MedecineApp
     {
         private readonly string _connectionString;
 
-        public BddRepository(object cs)
+        public BddRepository()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["BDDConnection"].ConnectionString;
         }
@@ -26,6 +26,7 @@ namespace MedecineApp
             try
             {
                 connection.Open();
+                
                 Console.WriteLine("Connection opened successfully.");
             }
             catch (Exception ex)
