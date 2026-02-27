@@ -1,0 +1,39 @@
+# ========================
+# Visual Studio
+# ========================
+.vs/
+*.user
+*.suo
+
+# ========================
+# Build folders
+# ========================
+bin/
+obj/
+
+# ========================
+# NuGet
+# ========================
+packages/
+project.assets.json
+project.nuget.cache
+*.nuget.g.props
+*.nuget.g.targets
+*.dgSpec.json
+
+# ========================
+# Cache files
+# ========================
+*.cache
+
+# ========================
+# IDEs optionnels
+# ========================
+.vscode/
+.idea/
+
+# ========================
+# OS files
+# ========================
+Thumbs.db
+.DS_Store
