@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace Tests
 {
-    public class MedecineTest
+    public class MedicamentTest
     {
         [SetUp]
         public void Setup()
