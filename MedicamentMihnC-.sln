@@ -1,9 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 18
-VisualStudioVersion = 18.3.11520.95
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicamentBO", "MedicamentBO\MedicamentBO.csproj", "{2A1A5C96-508E-52C3-C0C2-AFF7B0947D58}"
 EndProject
+<<<<<<< HEAD
 <<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedecineTest", "MedecineTest\MedecineTest.csproj", "{A70CE552-4355-13F7-6686-8D9F73BF02D7}"
 EndProject
@@ -14,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicamentConsole", "Medica
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicamentGUI", "MedicamentGUI\MedicamentGUI.csproj", "{3A69B661-4DE9-434A-83AC-F410AF919C18}"
 >>>>>>> de70c80b9489d9046ea30a4e5ead732c615d60bb
 EndProject
+=======
+>>>>>>> 659fed30c37a3361cdfa9ad5500106ea4ad5296d
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +27,7 @@ Global
 		{2A1A5C96-508E-52C3-C0C2-AFF7B0947D58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A1A5C96-508E-52C3-C0C2-AFF7B0947D58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A1A5C96-508E-52C3-C0C2-AFF7B0947D58}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{A70CE552-4355-13F7-6686-8D9F73BF02D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A70CE552-4355-13F7-6686-8D9F73BF02D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -43,6 +47,8 @@ Global
 		{3A69B661-4DE9-434A-83AC-F410AF919C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A69B661-4DE9-434A-83AC-F410AF919C18}.Release|Any CPU.Build.0 = Release|Any CPU
 >>>>>>> de70c80b9489d9046ea30a4e5ead732c615d60bb
+=======
+>>>>>>> 659fed30c37a3361cdfa9ad5500106ea4ad5296d
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
