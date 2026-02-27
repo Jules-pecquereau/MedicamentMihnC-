@@ -14,11 +14,19 @@ public class BibliotequeMedicament
 
     public IEnumerable<Medicament> RechercherMedicament(string nom)
     {
+        if (!Medicaments.Any(m => m.Name.Contains(nom, StringComparison.OrdinalIgnoreCase)))
+        {
+            throw new ExeptionRechercheMedicament($"Aucun médicament trouvé avec le nom '{nom}'.");
+        }
         return Medicaments.Where(m => m.Name.Contains(nom, StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<Medicament> RechercherParLaboratoire(string laboratoire)
     {
+        if (!Medicaments.Any(m => m.Laboratory.Contains(laboratoire, StringComparison.OrdinalIgnoreCase)))
+        {
+            throw new ExeptionRechercheMedicament($"Aucun médicament trouvé du laboratoire '{laboratoire}'.");
+        }
         return Medicaments.Where(m => m.Laboratory.Contains(laboratoire, StringComparison.OrdinalIgnoreCase));
     }
     public IEnumerable<Medicament> AfficherAllMedicament()
