@@ -15,6 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Barre de navigation -->
@@ -70,7 +71,7 @@
 
         <!-- Liste des médicaments -->
         <Border Grid.Row="3" Background="White" 
-                CornerRadius="5" Margin="20,10,20,20" 
+                CornerRadius="5" Margin="20,10,20,10" 
                 Padding="10" BorderBrush="#BDC3C7" BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
@@ -102,6 +103,13 @@
                             FontSize="14" FontWeight="Bold"
                             BorderThickness="0" Cursor="Hand"
                             Margin="5"/>
+                    <Button Content="🔄 Actualiser" 
+                            Command="{Binding RefreshCommand}"
+                            Width="120" Height="35"
+                            Background="#3498DB" Foreground="White"
+                            FontSize="14" FontWeight="Bold"
+                            BorderThickness="0" Cursor="Hand"
+                            Margin="5"/>
                 </StackPanel>
 
                 <!-- DataGrid -->
@@ -118,11 +126,60 @@
                           AlternatingRowBackground="#F8F9FA"
                           RowBackground="White">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Code médicament" Binding="{Binding CodeMedicament}" Width="200"/>
-                        <DataGridTextColumn Header="Désignation" Binding="{Binding Designation}" Width="*"/>
-                        <DataGridTextColumn Header="Laboratoire" Binding="{Binding Laboratoire}" Width="200"/>
+                        <DataGridTextColumn Header="Code médicament" Binding="{Binding Code_Medicament}" Width="200"/>
+                        <DataGridTextColumn Header="Désignation" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Laboratoire" Binding="{Binding Laboratory}" Width="200"/>
                     </DataGrid.Columns>
                 </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- Contrôles de pagination -->
+        <Border Grid.Row="4" Background="White" 
+                CornerRadius="5" Margin="20,10,20,20" 
+                Padding="15" BorderBrush="#BDC3C7" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Boutons de navigation gauche -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button Content="⏮️ Début" 
+                            Command="{Binding FirstPageCommand}"
+                            Width="80" Height="30" Margin="0,0,5,0"
+                            Background="#3498DB" Foreground="White"
+                            FontSize="12" BorderThickness="0" Cursor="Hand"/>
+                    <Button Content="◀️ Précédent" 
+                            Command="{Binding PreviousPageCommand}"
+                            Width="100" Height="30" Margin="0,0,5,0"
+                            Background="#3498DB" Foreground="White"
+                            FontSize="12" BorderThickness="0" Cursor="Hand"/>
+                </StackPanel>
+
+                <!-- Info page -->
+                <TextBlock Grid.Column="1" 
+                           Text="{Binding PageInfo}"
+                           FontSize="14" FontWeight="Bold"
+                           Foreground="#2C3E50"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+                <!-- Boutons de navigation droite -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button Content="Suivant ▶️" 
+                            Command="{Binding NextPageCommand}"
+                            Width="100" Height="30" Margin="0,0,5,0"
+                            Background="#3498DB" Foreground="White"
+                            FontSize="12" BorderThickness="0" Cursor="Hand"/>
+                    <Button Content="Fin ⏭️" 
+                            Command="{Binding LastPageCommand}"
+                            Width="80" Height="30"
+                            Background="#3498DB" Foreground="White"
+                            FontSize="12" BorderThickness="0" Cursor="Hand"/>
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>
