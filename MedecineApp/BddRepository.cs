@@ -21,13 +21,14 @@ namespace MedecineApp
             _connectionString = ConfigurationManager.ConnectionStrings["BDDConnection"].ConnectionString;
         }
 
-        public IEnumerable<Medicament> BuildBibliothequeMedicaments()
+        public BibliotequeMedicament BuildBibliothequeMedicaments()
         {
-            var medicaments = new List<Medicament>();
+            var bibliotheque = new BibliotequeMedicament("Ma Bibliothèque de Médicaments");
+          
             using (var connection = new MySqlConnection(_connectionString))
             {
                 connection.Open();
-                var command = new MySqlCommand("SELECT * FROM Medicaments", connection);
+                var command = new MySqlCommand("SELECT * FROM medicament", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -37,11 +38,11 @@ namespace MedecineApp
                             reader.GetString("Designation"),
                             reader.GetString("Laboratoire")
                         );
-                        medicaments.Add(medicament);
+                        bibliotheque.AjouterMedicament(medicament);
                     }
                 }
             }
-            return medicaments;
+            return bibliotheque;
         }
     }
 }
