@@ -1,24 +1,25 @@
 # Application de Gestion de Médicaments
 
-## Description
-Application desktop pour la gestion complète des médicaments, incluant l'inventaire, les prescriptions et les alertes d'expiration.
+## Architecture Logicielle
+Le projet suit une architecture en couches (N-Tier) pour séparer les responsabilités et faciliter la maintenance :
 
-## Fonctionnalités
-- **Gestion de l'inventaire** : Ajouter, modifier, supprimer des médicaments
-- **Suivi des stocks** : Contrôle des quantités disponibles
-- **Alertes d'expiration** : Notification des médicaments expirés ou proches de l'expiration
-- **Recherche** : Filtrer par nom, catégorie ou code
-- **Rapports** : Générer des rapports d'inventaire
+- **MedicamentBO (Business Objects)** : Couche métier contenant les entités principales (`Medicament`, `Patient`, `Ordonnance`, `Utilisateur`) ainsi que la logique de gestion (`BibliotequeMedicament`, `BibliothequePatient`).
+- **MedecineApp (Data Access Layer)** : Couche d'accès aux données. Contient le `BddRepository` chargé de la communication avec la base de données MariaDB.
+- **MedicamentGUI (Presentation Layer)** : Interface graphique utilisateur développée en WPF, permettant une interaction visuelle riche (gestion via `MedicamentPage`, `PatientPage`, etc.).
+- **MedicamentConsole** : Interface en ligne de commande (CLI) alternative pour interagir avec l'application.
+- **MedecineTest** : Projet de tests unitaires garantissant la fiabilité des composants et de la logique métier.
 
 ## Technologies
 - **Langage** : C#
-- **.NET Framework** : .NET Framework / .NET Core
-- **Interface** : WPF
+- **Framework** : .NET 8.0
+- **Interface Graphique** : WPF (Windows Presentation Foundation)
+- **Base de données** : MariaDB
+- **Tests** : Framework de tests unitaires intégré
 
-## Installation
-1. Cloner le repository
-2. Ouvrir le projet dans Visual Studio
-3. Restaurer les dépendances NuGet
-4. Compiler et exécuter l'application
 
-## Architecture
+## Installation et Configuration
+1. Cloner le repository.
+2. Ouvrir la solution `MedicamentMihnC-.sln` dans Visual Studio ou Visual Studio Code.
+3. Restaurer les dépendances NuGet (`dotnet restore`).
+4. Configurer la chaîne de connexion à la base de données MariaDB (dans les fichiers `App.config`).
+5. Compiler et exécuter le projet `MedicamentGUI` (pour l'interface graphique) ou `MedicamentConsole` (pour le terminal).
