@@ -4,16 +4,11 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using MedicamentBO;
+using MedecineApp;
 
 namespace MedicamentGUI
 {
-    public class Medicament
-    {
-        public long CodeMedicament { get; set; }
-        public string Designation { get; set; } = string.Empty;
-        public string Laboratoire { get; set; } = string.Empty;
-    }
-
     public class MedicamentVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -23,7 +18,11 @@ namespace MedicamentGUI
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ObservableCollection<Medicament> allMedicament;
+        private readonly BddRepository bddRepository;
+        private BibliotequeMedicament? bibliotheque;
+        private List<Medicament> allMedicaments;
+        private List<Medicament> filteredMedicaments;
+
         public ObservableCollection<Medicament> Medicaments { get; set; } = new ObservableCollection<Medicament>();
 
         private Medicament? selectedMedicament;
@@ -45,75 +44,167 @@ namespace MedicamentGUI
             {
                 searchText = value;
                 OnPropertyChanged();
+                CurrentPage = 1;
                 FilterMedicaments();
             }
         }
+
+        private int currentPage = 1;
+        public int CurrentPage
+        {
+            get => currentPage;
+            set
+            {
+                currentPage = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(PageInfo));
+                UpdatePagedData();
+            }
+        }
+
+        private int itemsPerPage = 10;
+        public int ItemsPerPage
+        {
+            get => itemsPerPage;
+            set
+            {
+                itemsPerPage = value;
+                OnPropertyChanged();
+                CurrentPage = 1;
+                UpdatePagedData();
+            }
+        }
+
+        public int TotalPages => filteredMedicaments == null || filteredMedicaments.Count == 0 
+            ? 1 
+            : (int)Math.Ceiling((double)filteredMedicaments.Count / ItemsPerPage);
+
+        public string PageInfo => $"Page {CurrentPage} sur {TotalPages} ({filteredMedicaments?.Count ?? 0} médicament(s))";
+
+        public bool CanGoPrevious => CurrentPage > 1;
+        public bool CanGoNext => CurrentPage < TotalPages;
 
         public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }
         public ICommand SearchCommand { get; }
+        public ICommand RefreshCommand { get; }
+        public ICommand PreviousPageCommand { get; }
+        public ICommand NextPageCommand { get; }
+        public ICommand FirstPageCommand { get; }
+        public ICommand LastPageCommand { get; }
 
         public MedicamentVM()
         {
-            allMedicament = new ObservableCollection<Medicament>();
+            bddRepository = new BddRepository();
+            allMedicaments = new List<Medicament>();
+            filteredMedicaments = new List<Medicament>();
 
             AddCommand = new RelayCommand(_ => AddMedicament());
             EditCommand = new RelayCommand(_ => EditMedicament(), _ => SelectedMedicament is not null);
             DeleteCommand = new RelayCommand(_ => DeleteMedicament(), _ => SelectedMedicament is not null);
             SearchCommand = new RelayCommand(_ => FilterMedicaments());
+            RefreshCommand = new RelayCommand(_ => LoadMedicaments());
+            PreviousPageCommand = new RelayCommand(_ => PreviousPage(), _ => CanGoPrevious);
+            NextPageCommand = new RelayCommand(_ => NextPage(), _ => CanGoNext);
+            FirstPageCommand = new RelayCommand(_ => FirstPage(), _ => CanGoPrevious);
+            LastPageCommand = new RelayCommand(_ => LastPage(), _ => CanGoNext);
 
-            LoadMedicament();
+            LoadMedicaments();
         }
 
-        private void LoadMedicament()
+        private void LoadMedicaments()
         {
-            allMedicament = new ObservableCollection<Medicament>
+            try
             {
-                new Medicament { CodeMedicament = 3400930001134, Designation = "DOLIPRANE 1000MG", Laboratoire = "SANOFI" },
-                new Medicament { CodeMedicament = 3400935526243, Designation = "ASPIRINE UPSA 500MG", Laboratoire = "UPSA" },
-                new Medicament { CodeMedicament = 3400936244900, Designation = "IBUPROFENE BIOGARAN 400MG", Laboratoire = "BIOGARAN" }
-            };
-
-            FilterMedicaments();
+                bibliotheque = bddRepository.BuildBibliothequeMedicaments();
+                allMedicaments = bibliotheque.AfficherAllMedicament().ToList();
+                CurrentPage = 1;
+                FilterMedicaments();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement des médicaments : {ex.Message}", 
+                    "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void FilterMedicaments()
         {
-            Medicaments.Clear();
+            filteredMedicaments.Clear();
 
             if (string.IsNullOrWhiteSpace(SearchText))
             {
-                foreach (var med in allMedicament)
-                {
-                    Medicaments.Add(med);
-                }
+                filteredMedicaments = allMedicaments.ToList();
             }
             else
             {
-                var filtered = allMedicament.Where(m =>
-                    m.Designation.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                    m.Laboratoire.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                    m.CodeMedicament.ToString().Contains(SearchText)
-                );
-
-                foreach (var med in filtered)
-                {
-                    Medicaments.Add(med);
-                }
+                filteredMedicaments = allMedicaments.Where(m =>
+                    m.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    m.Laboratory.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    m.Code_Medicament.ToString().Contains(SearchText)
+                ).ToList();
             }
+
+            OnPropertyChanged(nameof(TotalPages));
+            OnPropertyChanged(nameof(PageInfo));
+            OnPropertyChanged(nameof(CanGoPrevious));
+            OnPropertyChanged(nameof(CanGoNext));
+            UpdatePagedData();
+        }
+
+        private void UpdatePagedData()
+        {
+            Medicaments.Clear();
+
+            var itemsToSkip = (CurrentPage - 1) * ItemsPerPage;
+            var pagedItems = filteredMedicaments.Skip(itemsToSkip).Take(ItemsPerPage);
+
+            foreach (var med in pagedItems)
+            {
+                Medicaments.Add(med);
+            }
+
+            OnPropertyChanged(nameof(CanGoPrevious));
+            OnPropertyChanged(nameof(CanGoNext));
+        }
+
+        private void PreviousPage()
+        {
+            if (CanGoPrevious)
+            {
+                CurrentPage--;
+            }
+        }
+
+        private void NextPage()
+        {
+            if (CanGoNext)
+            {
+                CurrentPage++;
+            }
+        }
+
+        private void FirstPage()
+        {
+            CurrentPage = 1;
+        }
+
+        private void LastPage()
+        {
+            CurrentPage = TotalPages;
         }
 
         private void AddMedicament()
         {
-            MessageBox.Show("Fonctionnalité d'ajout à implémenter", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Fonctionnalité d'ajout à implémenter dans BddRepository", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void EditMedicament()
         {
             if (SelectedMedicament is not null)
             {
-                MessageBox.Show($"Modification de : {SelectedMedicament.Designation}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Fonctionnalité de modification à implémenter dans BddRepository", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -121,14 +212,12 @@ namespace MedicamentGUI
         {
             if (SelectedMedicament is not null)
             {
-                var result = MessageBox.Show($"Êtes-vous sûr de vouloir supprimer '{SelectedMedicament.Designation}' ?",
+                var result = MessageBox.Show($"Êtes-vous sûr de vouloir supprimer '{SelectedMedicament.Name}' ?",
                     "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    allMedicament.Remove(SelectedMedicament);
-                    FilterMedicaments();
-                    MessageBox.Show("Médicament supprimé avec succès", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Fonctionnalité de suppression à implémenter dans BddRepository", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }

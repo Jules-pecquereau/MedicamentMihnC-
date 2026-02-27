@@ -9,6 +9,7 @@ namespace MedicamentGUI
             base.OnStartup(e);
             MedicamentVM vm = new MedicamentVM();
             MainWindow mainWindow = new MainWindow(vm);
+
             mainWindow.Show();
         }
     }
