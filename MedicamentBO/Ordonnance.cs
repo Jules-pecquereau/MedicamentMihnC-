@@ -15,9 +15,9 @@ namespace MedicamentBO
         public DateTime Date { get; }
         public int NumeroPatient { get; }
 
-        public IEnumerable<Medicament> Medicaments => medicaments.AsReadOnly();
+        public IEnumerable<Medicament> Medicaments => medicamentslist.AsReadOnly();
 
-        private List<Medicament> medicaments = new List<Medicament>();
+        private List<Medicament> medicamentslist = new List<Medicament>();
 
 
 
@@ -31,14 +31,14 @@ namespace MedicamentBO
 
             if (medicament != null)
             {
-                medicaments.Add(medicament);
+                medicamentslist.Add(medicament);
             }
 
         }
 
         public override string ToString()
         {
-            return $"Ordonnance: {Designation}, Posologie: {Posologie}, Médicament {Medicaments}, Date: {Date.ToShortDateString()}, Numéro Patient: {NumeroPatient}";
+            return $"Ordonnance: {Designation}, Posologie: {Posologie}, Code Médicament: {medicamentslist}, Date: {Date.ToShortDateString()}, Numéro Patient: {NumeroPatient}";
         }
 
 
