@@ -6,8 +6,13 @@
         xmlns:local="clr-namespace:MedicamentGUI"
         mc:Ignorable="d"
         Title="Gestion Médicaments et Patients" Height="600" Width="1000">
-    <Grid>
+
+
+
+    <Grid Background="#ECF0F1">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -15,22 +20,110 @@
         <!-- Barre de navigation -->
         <Border Grid.Row="0" Background="#2C3E50" Padding="10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="BtnMedicaments" Content="Médicaments" 
+                <Button Content="Médicaments" 
                         Width="150" Height="40" Margin="10,0" 
                         Background="#3498DB" Foreground="White" 
                         FontSize="16" FontWeight="Bold"
-                        BorderThickness="0" Cursor="Hand"
-                        Click="BtnMedicaments_Click"/>
-                <Button x:Name="BtnPatients" Content="Patients" 
+                        BorderThickness="0" Cursor="Hand"/>
+                <Button Content="Patients" 
                         Width="150" Height="40" Margin="10,0" 
                         Background="#3498DB" Foreground="White" 
                         FontSize="16" FontWeight="Bold"
-                        BorderThickness="0" Cursor="Hand"
-                        Click="BtnPatients_Click"/>
+                        BorderThickness="0" Cursor="Hand"/>
             </StackPanel>
         </Border>
 
-        <!-- Conteneur pour les pages -->
-        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+        <!-- Titre -->
+        <TextBlock Grid.Row="1" Text="Gestion des Médicaments" 
+                   FontSize="28" FontWeight="Bold" 
+                   Foreground="#2C3E50" 
+                   Margin="20,20,20,10"
+                   HorizontalAlignment="Center"/>
+
+        <!-- Barre de recherche -->
+        <Border Grid.Row="2" Background="White" 
+                CornerRadius="5" Margin="20,10" 
+                Padding="15" BorderBrush="#BDC3C7" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0"
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="16" 
+                         VerticalContentAlignment="Center"
+                         Padding="10,8"
+                         BorderThickness="1"
+                         BorderBrush="#BDC3C7"/>
+
+                <Button Grid.Column="1" Content="🔍 Rechercher" 
+                        Command="{Binding SearchCommand}"
+                        Width="120" Height="40"
+                        Background="#3498DB" Foreground="White"
+                        FontSize="14" FontWeight="Bold"
+                        BorderThickness="0" Cursor="Hand"
+                        Margin="10,0,0,0"/>
+            </Grid>
+        </Border>
+
+        <!-- Liste des médicaments -->
+        <Border Grid.Row="3" Background="White" 
+                CornerRadius="5" Margin="20,10,20,20" 
+                Padding="10" BorderBrush="#BDC3C7" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Boutons d'action -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                            HorizontalAlignment="Right" Margin="0,0,0,10">
+                    <Button Content="➕ Ajouter" 
+                            Command="{Binding AddCommand}"
+                            Width="120" Height="35"
+                            Background="#27AE60" Foreground="White"
+                            FontSize="14" FontWeight="Bold"
+                            BorderThickness="0" Cursor="Hand"
+                            Margin="5"/>
+                    <Button Content="✏️ Modifier" 
+                            Command="{Binding EditCommand}"
+                            Width="120" Height="35"
+                            Background="#F39C12" Foreground="White"
+                            FontSize="14" FontWeight="Bold"
+                            BorderThickness="0" Cursor="Hand"
+                            Margin="5"/>
+                    <Button Content="🗑️ Supprimer" 
+                            Command="{Binding DeleteCommand}"
+                            Width="120" Height="35"
+                            Background="#E74C3C" Foreground="White"
+                            FontSize="14" FontWeight="Bold"
+                            BorderThickness="0" Cursor="Hand"
+                            Margin="5"/>
+                </StackPanel>
+
+                <!-- DataGrid -->
+                <DataGrid Grid.Row="1" 
+                          ItemsSource="{Binding Medicaments}"
+                          SelectedItem="{Binding SelectedMedicament}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          AlternatingRowBackground="#F8F9FA"
+                          RowBackground="White">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Code médicament" Binding="{Binding CodeMedicament}" Width="200"/>
+                        <DataGridTextColumn Header="Désignation" Binding="{Binding Designation}" Width="*"/>
+                        <DataGridTextColumn Header="Laboratoire" Binding="{Binding Laboratoire}" Width="200"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
