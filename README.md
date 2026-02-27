@@ -47,7 +47,7 @@ Le projet suit une architecture en couches (N-Tier) pour séparer les responsabi
 
 1. **Cloner le repository** :
    ```bash
-   git clone <votre-url-de-repo>
+   git clone <https://github.com/Jules-pecquereau/MedicamentMihnC->
    ```
 
 2. **Ouvrir la solution** `MedicamentMihnC-.sln` dans Visual Studio ou Visual Studio Code.
