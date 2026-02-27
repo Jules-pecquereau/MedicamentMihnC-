@@ -15,10 +15,10 @@ namespace MedicamentBO
         public string CodePostal { get; }
         public string Ville { get; }
         public string Pays{ get; }
-        public int NumeroSecu { get; }
+        public long NumeroSecu { get; }
         public int Telehone { get; }
 
-        public Patient(int id, string nom, string prenom, string email, string adresse, string codePostal, string ville, string pays, int numeroSecu, int telehone) : base(nom, prenom, email)
+        public Patient(int id, string nom, string prenom, string email, string adresse, string codePostal, string ville, string pays, long numeroSecu, int telehone) : base(nom, prenom, email)
         {
             Id = id;
             Adresse = adresse;
