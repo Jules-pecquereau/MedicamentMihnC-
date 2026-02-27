@@ -16,6 +16,12 @@ namespace MedicamentConsole
                 Console.WriteLine(medicament);
             }*/
 
+            //Console.WriteLine("Tous les Patients:");
+            //foreach (var medicament in bibliotheque.AfficherAllPatients())
+            //{                
+            //    Console.WriteLine(medicament);
+            //}
+
         }
     }
 }
